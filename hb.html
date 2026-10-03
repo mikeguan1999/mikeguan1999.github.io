@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    GitHub Pages cannot set response headers, so the CSP lives in a meta tag.
+    TODO(security): frame-ancestors / X-Frame-Options are not enforceable via
+    meta tags; clickjacking protection would need a host that sets headers.
+    TODO(security): Google Fonts CSS is generated per user-agent, so SRI hashes
+    cannot be pinned for it. It is CSS-only (no script), restricted by style-src.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="A birthday card that lights up the sky.">
+  <title>Happy Birthday 🎆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@500&family=Playfair+Display:ital,wght@0,500;1,500&display=swap">
+  <link rel="stylesheet" href="styles/hb.css">
+  <script src="scripts/hb.js" defer></script>
+</head>
+
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+
+  <main>
+    <!-- Scene 1: the night sky -->
+    <section id="hero" class="scene is-active" aria-labelledby="hero-title">
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 id="hero-title">Happy Birthday<span class="name" id="hero-name"></span></h1>
+      <p class="hint">Tap anywhere to light up the sky ✦</p>
+      <button id="open-card-btn" class="btn" type="button">Open your card <span aria-hidden="true">✉</span></button>
+    </section>
+
+    <!-- Scene 2: the envelope -->
+    <section id="envelope-scene" class="scene" aria-label="Envelope" inert>
+      <button id="envelope" class="envelope" type="button" aria-label="Open the envelope">
+        <span class="envelope__back"></span>
+        <span class="envelope__letter">
+          <span class="envelope__line"></span>
+          <span class="envelope__line"></span>
+          <span class="envelope__line envelope__line--short"></span>
+        </span>
+        <span class="envelope__pocket"></span>
+        <span class="envelope__flap"></span>
+        <span class="envelope__seal" aria-hidden="true">♥</span>
+      </button>
+      <p class="hint">Tap the seal</p>
+    </section>
+
+    <!-- Scene 3: the card -->
+    <section id="card-scene" class="scene" aria-labelledby="card-title" inert>
+      <article class="card">
+        <header class="card__header">
+          <p class="eyebrow eyebrow--dark" id="card-date"></p>
+          <h2 id="card-title" tabindex="-1"></h2>
+          <p id="card-subtitle" class="card__subtitle" lang="ja"></p>
+        </header>
+
+        <figure id="slideshow" class="slideshow" aria-roledescription="carousel" aria-label="Photos" hidden>
+          <div class="slideshow__frame" id="slideshow-frame">
+            <button id="slide-prev" class="slideshow__nav slideshow__nav--prev" type="button"
+              aria-label="Previous photo">‹</button>
+            <button id="slide-next" class="slideshow__nav slideshow__nav--next" type="button"
+              aria-label="Next photo">›</button>
+          </div>
+          <figcaption id="slideshow-caption" aria-live="polite"></figcaption>
+          <div class="slideshow__dots" id="slideshow-dots"></div>
+        </figure>
+
+        <div id="card-message" class="card__message"></div>
+        <p class="card__closing" id="card-closing"></p>
+        <p class="card__signature" id="card-signature"></p>
+        <p class="card__emoji" id="card-emoji" aria-hidden="true"></p>
+
+        <div class="wish">
+          <div class="cake" id="cake" aria-hidden="true">
+            <div class="cake__candles">
+              <span class="candle"><span class="flame"></span><span class="smoke"></span></span>
+              <span class="candle"><span class="flame"></span><span class="smoke"></span></span>
+              <span class="candle"><span class="flame"></span><span class="smoke"></span></span>
+            </div>
+            <div class="cake__icing"></div>
+            <div class="cake__layer"></div>
+            <div class="cake__plate"></div>
+          </div>
+          <button id="wish-btn" class="btn btn--rose" type="button">Make a wish &amp; blow out the candles</button>
+          <p id="wish-msg" class="wish__msg" aria-live="polite"></p>
+        </div>
+
+        <button id="close-card-btn" class="link-btn" type="button">← back to the sky</button>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>
